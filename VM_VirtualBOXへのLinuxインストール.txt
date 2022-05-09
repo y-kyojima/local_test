@@ -1,0 +1,134 @@
+
+
+■Linux仮想環境構築：
+
+環境
+・ホストマシン環境
+　OS：Windows10 HOMEエディション 64bit
+　CPU：Inte Corei5 2520M 64bit
+　メモリ：8GB
+　ストレージ：128GB USBメモリ
+　仮想化ソフト：Oracle VirtualBox（ver 6.1.32）
+
+・ゲストOS
+　CentOS7
+　CentOS8.5
+　AlmaLinux8.5
+　RockyLinux8.5
+
+
+
+
+
+■VirtualBoxとゲストOS（Linux）のダウンロード
+
+・VirtualBOX（ver6.1.32）をインストール
+　VirtualBOX をダウンロードして、PCにインストール
+　https://download.virtualbox.org/virtualbox/6.1.32/Oracle_VM_VirtualBox_Extension_Pack-6.1.32-149290.vbox-extpack
+
+　VirtualBox Extension Pack をダウンロードしてPCにインストール
+　https://download.virtualbox.org/virtualbox/6.1.32/Oracle_VM_VirtualBox_Extension_Pack-6.1.32.vbox-extpack
+
+
+・ゲストOSをダウンロード（RedHatLinux系のOSで下記はインストール確認済み）
+　CentOS7
+　https://ftp.riken.jp/Linux/centos/7.9.2009/isos/x86_64/CentOS-7-x86_64-DVD-2009.iso
+
+　CentOS8.5（公式サイトでは配布終了しているので、http://vault.centos.org/ からDL）
+　https://vault.centos.org/8.5.2111/isos/x86_64/CentOS-8.5.2111-x86_64-dvd1.iso
+
+　AlmaLinux8.5
+　https://ftp.riken.jp/Linux/almalinux/8.5/isos/x86_64/AlmaLinux-8.5-x86_64-dvd.iso
+
+　RockyLinux8.5
+　https://download.rockylinux.org/pub/rocky/8/isos/x86_64/Rocky-8.5-x86_64-dvd1.iso
+
+
+
+■VirtualBOXにLinuxをインストール
+●VirtualBOXを起動
+●メニューバー > 仮想マシン > 新規 をクリック
+・名前とオペレーティングシステム
+　名前：好きな名前を入力
+　マシンフォルダー：仮想マシンをインストールするフォルダを選択
+　　　　ディスク容量は最低10GB程度必要。
+　　　　内臓HDD/SSDに空きがなければ、USBメモリにインストールも可能
+　　　　USBを挿して、ドライブを選択するだけ
+　タイプ：OSの系統を選択（今回はLinuxを選択）
+　バージョン：OSの種別を選択（今回はRed Hat（64-bit）を選択）
+
+・メモリーサイズ
+　ホストマシンに実装している物理メモリ以下を指定
+　（今回は 4096MB とした）
+
+・ハードディスク
+　「仮想ハードディスクを作成する」を選択
+　
+「作成」ボタンをクリック
+
+●仮想ハードディスクの作成
+　ファイルの場所
+　　記載されているパスで問題なければ変更不要
+
+●ファイルサイズ
+　インストールするストレージの容量以内で、利用可能な分を割り当てる
+　※CentOS8.5、AlmaLinux8.5、RockyLinux8.5　は最低10GBは必要
+　（今回はOS1つあたり、24GBとした）
+
+●ハードディスクのタイプ
+　「VDI（VirtualBox Disk Image）」を選択
+
+●物理ハードディスクにあるストレージ
+　「可変サイズ」を選択
+
+「作成」ボタンをクリック
+
+
+※設定例（試行錯誤しながらインストール成功した設定）
+VirtualBOXの左側に作成された仮想マシンを選択して、右上の設定ボタンをクリック
+●システム > マザーボード
+　チップセット：ICH9
+　ポインティングデバイス：PS/2 マウス
+　拡張機能：「EFIを有効化（一部のOSのみ）」のみチェックを外す
+
+●システム > プロセッサー
+　プロセッサー数：2
+
+●システム > アクセラレーション
+　準仮想化インターフェイス：デフォルト（Hyper V を選択してもOKだった）
+　仮想化支援機能：「ネステッドページングを有効化」にチェックを入れる
+
+
+●ディスプレイ > スクリーン
+　ビデオメモリー：30MB（そこかのサイトに書いてあった）
+
+●ストレージ
+　・ストレージデバイス
+　　コントローラ：IDE
+　　　「光学ドライブの追加」をクリックし、DLしたLinuxのisoファイルを選択
+　　　デフォルトで入っていた「空」を右クリックして、割り当てを除去 を実行して削除
+　
+
+●ネットワーク > アダプター1
+　ネットワークを有効化にチェックを入れる
+　割り当て：「ブリッジアダプター」を選択
+　
+
+右下の「OK」ボタンを押す
+
+
+設定した仮想マシンを選択して、通常起動する
+VirtualBOXがLinuxのインストーラを起動する
+（ここでインストらが起動しない場合はネットでエラー事例と対処法を探しながら試行錯誤、、、）
+
+
+Linuxインストーラの設定はGUIで選択していく
+（画面イメージと流れはネットで検索）
+
+
+Linuxのインストールが完了すると仮想マシンのOSを再起動を行う
+
+
+OS再起動後、初期設定を行う
+（黒画面で、コマンドを実行して設定する方法は 「VM_Linux初期設定.txt」 参照）
+
